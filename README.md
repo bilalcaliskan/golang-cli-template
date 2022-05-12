@@ -23,3 +23,9 @@
   - [ ] Fetch https://github.com/dimiro1/banner
 - [ ] Remove all commented lines on files on [.github/workflows](.github/workflows) directory
 - [ ] If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](.goreleaser.yaml)
+
+## Used Libraries
+- [spf13/cobra](https://github.com/spf13/cobra)
+- [stretchr/testify](https://github.com/stretchr/testify)
+- [go.uber.org/automaxprocs](https://go.uber.org/automaxprocs)
+- [go.uber.org/zap](https://go.uber.org/zap)
