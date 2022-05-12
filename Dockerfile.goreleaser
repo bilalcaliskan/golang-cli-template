@@ -1,0 +1,6 @@
+FROM gcr.io/distroless/static:nonroot-amd64
+
+ADD golang-cli-template /usr/local/bin/golang-cli-template
+
+USER nonroot
+ENTRYPOINT ["golang-cli-template"]
