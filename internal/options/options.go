@@ -8,7 +8,7 @@ type GolangCliTemplateOptions struct {
 	Foo string
 }
 
-// GetGolangCliTemplateOptions returns the pointer of OreillyTrialOptions
+// GetGolangCliTemplateOptions returns the pointer of GolangCliTemplateOptions
 func GetGolangCliTemplateOptions() *GolangCliTemplateOptions {
 	return golangCliTemplateOptions
 }
