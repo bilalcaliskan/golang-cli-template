@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.17.x
-      - name: Lint
+      - name: Run Ineffassign
         run: make ineffassign
 
   test:
@@ -58,58 +58,58 @@ jobs:
       - name: Test
         run: make test
 
-#  codeql:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        language: [ 'go' ]
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#      - name: Initialize CodeQL
-#        uses: github/codeql-action/init@v1
-#        with:
-#          languages: ${{ matrix.language }}
-#      - name: Autobuild
-#        uses: github/codeql-action/autobuild@v1
-#      - name: Perform CodeQL Analysis
-#        uses: github/codeql-action/analyze@v1
-#
-#  sonarcloud:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#      - name: Install Go
-#        uses: actions/setup-go@v3
-#        with:
-#          go-version: 1.17.x
-#      - name: Coverage Test
-#        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-#      - name: SonarCloud Scan
-#        uses: SonarSource/sonarcloud-github-action@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#      - name: SonarQube Quality Gate check
-#        uses: sonarsource/sonarqube-quality-gate-action@master
-#        timeout-minutes: 5
-#        env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#
-#  build:
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, macos-latest]
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Install Go
-#        uses: actions/setup-go@v3
-#        with:
-#          go-version: 1.17.x
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#      - name: Test
-#        run: make build
+  codeql:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'go' ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17.x
+      - name: Coverage Test
+        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarQube Quality Gate check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17.x
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Test
+        run: make build
