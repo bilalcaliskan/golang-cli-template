@@ -14,6 +14,7 @@
 ## Setup
 - [ ] Find and replace all occurrences of `golang-cli-template` with your desired project name
 - [ ] Find and replace all occurrences of `GolangCliTemplate` with upper camel case form of your desired project name
+- [ ] Find and replace all occurrences of `golangCliTemplate` with lower camel case form of your desired project name
 - [ ] Ensure created repository has been added to https://sonarcloud.io/
 - [ ] Ensure `SONAR_TOKEN` has been added as repository secret
 - [ ] Ensure `DOCKER_PASSWORD` repository secret has been added
