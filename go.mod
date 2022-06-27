@@ -3,7 +3,7 @@ module golang-cli-template
 go 1.17
 
 require (
-	github.com/spf13/cobra v1.4.0
+	github.com/spf13/cobra v1.5.0
 	github.com/stretchr/testify v1.7.2
 	go.uber.org/automaxprocs v1.5.1
 	go.uber.org/zap v1.21.0
