@@ -23,7 +23,7 @@
   - [ ] Uncomment required lines in [cmd/root.go](cmd/root.go)
   - [ ] Fetch https://github.com/dimiro1/banner
 - [ ] Remove all commented lines on files on [.github/workflows](.github/workflows) directory
-- [ ] If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](.goreleaser.yaml)
+- [ ] If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](build/package/.goreleaser.yaml)
 
 ## Used Libraries
 - [spf13/cobra](https://github.com/spf13/cobra)
