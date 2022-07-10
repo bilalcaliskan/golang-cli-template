@@ -11,19 +11,19 @@
 [![Go version](https://img.shields.io/github/go-mod/go-version/bilalcaliskan/golang-cli-template)](https://github.com/bilalcaliskan/golang-cli-template)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## Setup
-- [ ] Find and replace all occurrences of `golang-cli-template` with your desired project name
-- [ ] Find and replace all occurrences of `GolangCliTemplate` with upper camel case form of your desired project name
-- [ ] Find and replace all occurrences of `golangCliTemplate` with lower camel case form of your desired project name
-- [ ] Ensure created repository has been added to https://sonarcloud.io/
-- [ ] Ensure `SONAR_TOKEN` has been added as repository secret
-- [ ] Ensure `DOCKER_PASSWORD` repository secret has been added
-- [ ] To create banner:
-  - [ ] Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html)
-  - [ ] Uncomment required lines in [cmd/root.go](cmd/root.go)
-  - [ ] Fetch https://github.com/dimiro1/banner
-- [ ] Remove all commented lines on files on [.github/workflows](.github/workflows) directory
-- [ ] If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](build/package/.goreleaser.yaml)
+## Required Steps
+- Find and replace all occurrences of `golang-cli-template` with your desired project name
+- Find and replace all occurrences of `GolangCliTemplate` with upper camel case form of your desired project name
+- Find and replace all occurrences of `golangCliTemplate` with lower camel case form of your desired project name
+- Ensure created repository has been added to https://sonarcloud.io/
+- Ensure `SONAR_TOKEN` has been added as repository secret
+- Ensure `DOCKER_USERNAME` and `DOCKER_PASSWORD` repository secrets have been added
+- To create banner:
+  - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html)
+  - Uncomment required lines in [cmd/root.go](cmd/root.go)
+  - Fetch https://github.com/dimiro1/banner
+- Remove all commented lines on files on [.github/workflows](.github/workflows) directory
+- If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](build/package/.goreleaser.yaml)
 
 ## Used Libraries
 - [spf13/cobra](https://github.com/spf13/cobra)
@@ -40,5 +40,5 @@ This project requires below tools while developing:
 
 After you installed [pre-commit](https://pre-commit.com/), simply run below command to prepare your development environment:
 ```shell
-$ pre-commit install
+$ pre-commit install -c build/ci/.pre-commit-config.yaml
 ```
