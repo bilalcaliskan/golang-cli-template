@@ -1,30 +1,39 @@
 package cmd
 
 import (
+	"github.com/bilalcaliskan/golang-cli-template/internal/logging"
+	"github.com/bilalcaliskan/golang-cli-template/internal/options"
+	"github.com/bilalcaliskan/golang-cli-template/internal/version"
 	"github.com/spf13/cobra"
 	_ "go.uber.org/automaxprocs"
 	"go.uber.org/zap"
-	"golang-cli-template/internal/logging"
-	"golang-cli-template/internal/options"
 	"os"
 )
 
+var (
+	opts *options.GolangCliTemplateOptions
+	ver  = version.Get()
+)
+
 func init() {
-	opts := options.GetGolangCliTemplateOptions()
+	opts = options.GetGolangCliTemplateOptions()
 	rootCmd.PersistentFlags().StringVarP(&opts.Foo, "foo", "", "", "")
 }
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "golang-cli-template",
-	Short: "",
-	Long:  ``,
+	Use:     "golang-cli-template",
+	Short:   "",
+	Long:    ``,
+	Version: ver.GitVersion,
 	Run: func(cmd *cobra.Command, args []string) {
-		opts := options.GetGolangCliTemplateOptions()
-		logging.GetLogger().Info("", zap.Any("opts", opts))
-		/*if err := oreilly.Generate(opts); err != nil {
-			logging.GetLogger().Fatal("an error occurred while generating user", zap.String("error", err.Error()))
-		}*/
+		logging.GetLogger().Info("golang-cli-template is started",
+			zap.String("appVersion", ver.GitVersion),
+			zap.String("goVersion", ver.GoVersion),
+			zap.String("goOS", ver.GoOs),
+			zap.String("goArch", ver.GoArch),
+			zap.String("gitCommit", ver.GitCommit),
+			zap.String("buildDate", ver.BuildDate))
 	},
 }
 
