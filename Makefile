@@ -1,4 +1,3 @@
-ERRCHECK_VERSION = latest
 GOLANGCI_LINT_VERSION = latest
 REVIVE_VERSION = latest
 GOIMPORTS_VERSION = latest
@@ -14,7 +13,7 @@ clean:
 	rm -rf $(LOCAL_BIN)
 
 .PHONY: tools
-tools:  golangci-lint-install revive-install go-imports-install ineffassign-install errcheck-install
+tools:  golangci-lint-install revive-install go-imports-install ineffassign-install
 	go mod tidy
 
 .PHONY: golangci-lint-install
@@ -28,10 +27,6 @@ revive-install:
 .PHONY: ineffassign-install
 ineffassign-install:
 	GOBIN=$(LOCAL_BIN) go install github.com/gordonklaus/ineffassign@$(INEFFASSIGN_VERSION)
-
-.PHONY: errcheck-install
-errcheck-install:
-	GOBIN=$(LOCAL_BIN) go install github.com/kisielk/errcheck@$(ERRCHECK_VERSION)
 
 .PHONY: lint
 lint: tools run-lint
@@ -75,13 +70,7 @@ go-imports-install:
 	GOBIN=$(LOCAL_BIN) go install golang.org/x/tools/cmd/goimports@$(GOIMPORTS_VERSION)
 
 .PHONY: fmt
-fmt: tools run-errcheck run-fmt run-ineffassign run-vet
-
-.PHONY: run-errcheck
-run-errcheck:
-	$(info running errcheck...)
-	$(LOCAL_BIN)/errcheck ./... || (echo errcheck returned an error, exiting!; sh -c 'exit 1';)
-	$(info errcheck exited successfully!)
+fmt: tools run-fmt run-ineffassign run-vet
 
 .PHONY: run-fmt
 run-fmt:
