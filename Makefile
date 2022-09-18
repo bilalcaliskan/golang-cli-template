@@ -2,6 +2,8 @@ GOLANGCI_LINT_VERSION = latest
 REVIVE_VERSION = latest
 GOIMPORTS_VERSION = latest
 INEFFASSIGN_VERSION = latest
+USERNAME ?= $(shell bash -c 'read -p "Username: " username; echo $$username')
+
 
 LOCAL_BIN := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/.bin
 
@@ -123,3 +125,9 @@ cross-compile:
 	GOOS=darwin GOARCH=amd64 go build -o bin/main-darwin-amd64 main.go
 	GOOS=linux GOARCH=amd64 go build -o bin/main-linux-amd64 main.go
 	GOOS=windows GOARCH=amd64 go build -o bin/main-windows-amd64 main.go
+
+
+.PHONY: prepare-project
+PROJECT_NAME ?= $(shell read -p "Project Name: " project_name; echo $$project_name)
+prepare-project:
+	grep -rl golang-cli-template . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golang-cli-template/$(PROJECT_NAME)/g'
