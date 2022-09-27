@@ -127,7 +127,11 @@ cross-compile:
 	GOOS=windows GOARCH=amd64 go build -o bin/main-windows-amd64 main.go
 
 
-.PHONY: prepare-project
-PROJECT_NAME ?= $(shell read -p "Project Name: " project_name; echo $$project_name)
-prepare-project:
-	grep -rl golang-cli-template . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golang-cli-template/$(PROJECT_NAME)/g'
+.PHONY: prepare-initial-project
+PROJECT_NAME ?= $(shell read -p "Project Name(ex: demo-project): " project_name; echo $$project_name)
+PROJECT_NAME_UPPER_CAMEL_CASE ?= $(shell read -p "Project Name Upper Camel Case(ex: DemoProject): " project_name_upper_camel_case; echo $$project_name_upper_camel_case)
+PROJECT_NAME_CAMEL_CASE ?= $(shell read -p "Project Name Camel Case(ex: demoProject): " project_name_camel_case; echo $$project_name_camel_case)
+prepare-initial-project:
+	grep -rl demo-project . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demo-project/$(PROJECT_NAME)/g'
+	grep -rl DemoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/DemoProject/$(PROJECT_NAME_UPPER_CAMEL_CASE)/g'
+	grep -rl demoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demoProject/$(PROJECT_NAME_CAMEL_CASE)/g'
