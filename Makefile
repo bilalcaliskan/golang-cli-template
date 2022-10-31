@@ -135,3 +135,8 @@ prepare-initial-project:
 	grep -rl demo-project . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demo-project/$(PROJECT_NAME)/g'
 	grep -rl DemoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/DemoProject/$(PROJECT_NAME_UPPER_CAMEL_CASE)/g'
 	grep -rl demoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demoProject/$(PROJECT_NAME_CAMEL_CASE)/g'
+	echo "Here are few manuel steps to check:"
+	echo "  - Please ensure created repository has been added to \"https://sonarcloud.io/\""
+	echo "  - Please ensure \"SONAR_TOKEN\" has been added as repository secret"
+	echo "  - Please ensure \"DOCKER_USERNAME\" and \"DOCKER_PASSWORD\" repository secrets have been added to your repository if you want to dockerize app"
+	echo "  - If you want to release as Formula, add \"TAP_GITHUB_TOKEN\" secret and uncomment brew related configurations on file \"build/package/.goreleaser.yaml\""
