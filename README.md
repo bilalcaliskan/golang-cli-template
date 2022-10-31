@@ -28,7 +28,6 @@
 ## Used Libraries
 - [spf13/cobra](https://github.com/spf13/cobra)
 - [stretchr/testify](https://github.com/stretchr/testify)
-- [go.uber.org/automaxprocs](https://go.uber.org/automaxprocs)
 - [go.uber.org/zap](https://go.uber.org/zap)
 
 ## Development
