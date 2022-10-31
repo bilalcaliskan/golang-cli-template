@@ -1,13 +1,13 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/bilalcaliskan/golang-cli-template/internal/logging"
 	"github.com/bilalcaliskan/golang-cli-template/internal/options"
 	"github.com/bilalcaliskan/golang-cli-template/internal/version"
 	"github.com/spf13/cobra"
-	_ "go.uber.org/automaxprocs"
 	"go.uber.org/zap"
-	"os"
 )
 
 var (
