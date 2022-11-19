@@ -2,7 +2,6 @@ GOLANGCI_LINT_VERSION = latest
 REVIVE_VERSION = latest
 GOIMPORTS_VERSION = latest
 INEFFASSIGN_VERSION = latest
-USERNAME ?= $(shell bash -c 'read -p "Username: " username; echo $$username')
 
 
 LOCAL_BIN := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/.bin
@@ -128,10 +127,12 @@ cross-compile:
 
 
 .PHONY: prepare-initial-project
+GITHUB_USERNAME ?= $(shell read -p "Your Github username(ex: bilalcaliskan): " github_username; echo $$github_username)
 PROJECT_NAME ?= $(shell read -p "'Kebab-cased' Project Name(ex: demo-project): " project_name; echo $$project_name)
 PROJECT_NAME_PASCAL_CASE ?= $(shell read -p "'Pascal-cased' Project Name(ex: DemoProject): " project_name_pascal_case; echo $$project_name_pascal_case)
 PROJECT_NAME_CAMEL_CASE ?= $(shell read -p "'Camel-cased' Project Name(ex: demoProject): " project_name_camel_case; echo $$project_name_camel_case)
 prepare-initial-project:
+	grep -rl bilalcaliskan . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/bilalcaliskan/$(GITHUB_USERNAME)/g'
 	grep -rl demo-project . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demo-project/$(PROJECT_NAME)/g'
 	grep -rl DemoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/DemoProject/$(PROJECT_NAME_PASCAL_CASE)/g'
 	grep -rl demoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demoProject/$(PROJECT_NAME_CAMEL_CASE)/g'
