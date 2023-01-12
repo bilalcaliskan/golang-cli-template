@@ -27,6 +27,9 @@ var rootCmd = &cobra.Command{
 	Long:    ``,
 	Version: ver.GitVersion,
 	Run: func(cmd *cobra.Command, args []string) {
+		/*bannerBytes, _ := ioutil.ReadFile("banner.txt")
+		banner.Init(os.Stdout, true, false, strings.NewReader(string(bannerBytes)))*/
+
 		logging.GetLogger().Info("golang-cli-template is started",
 			zap.String("appVersion", ver.GitVersion),
 			zap.String("goVersion", ver.GoVersion),
@@ -40,9 +43,6 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	/*bannerBytes, _ := ioutil.ReadFile("banner.txt")
-	banner.Init(os.Stdout, true, false, strings.NewReader(string(bannerBytes)))*/
-
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)

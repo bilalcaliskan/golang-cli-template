@@ -12,18 +12,30 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Required Steps
-- Find and replace all occurrences of `golang-cli-template` with your desired project name
-- Find and replace all occurrences of `GolangCliTemplate` with upper camel case form of your desired project name
-- Find and replace all occurrences of `golangCliTemplate` with lower camel case form of your desired project name
-- Ensure created repository has been added to https://sonarcloud.io/
-- Ensure `SONAR_TOKEN` has been added as repository secret
-- Ensure `DOCKER_USERNAME` and `DOCKER_PASSWORD` repository secrets have been added
-- To create banner:
-  - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html)
-  - Uncomment required lines in [cmd/root.go](cmd/root.go)
-  - Fetch https://github.com/dimiro1/banner
-- Remove all commented lines on files on [.github/workflows](.github/workflows) directory
-- If you want to release as Formula, add `TAP_GITHUB_TOKEN` secret and uncomment brew related configurations on [.goreleaser.yaml](build/package/.goreleaser.yaml)
+- Single command is mostly enough to prepare project, it will prompt you with some questions about your new project:
+  ```shell
+  make prepare-initial-project
+  ```
+
+## Additional nice-to-have steps
+- If you want to build and publish Docker image:
+  - Ensure `DOCKER_USERNAME` has been added as **repository secret on GitHub**
+  - Ensure `DOCKER_PASSWORD` has been added as **repository secret on GitHub**
+  - Uncomment **line 178** to **line 185** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 32** to **line 50** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
+- If you want to enable https://sonarcloud.io/ integration:
+  - Ensure your created repository from that template has been added to https://sonarcloud.io/
+  - Ensure `SONAR_TOKEN` has been added as **repository secret** on GitHub
+  - Ensure `SONAR_TOKEN` has been added as **dependabot secret** on GitHub
+- If you want to create banner:
+  - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory
+  - Uncomment **line 30** and **line 31** in [cmd/root.go](cmd/root.go)
+  - Run `go get -u github.com/dimiro1/banner`
+- If you want to release as Homebrew Formula:
+  - At first, you must have a **formula repository** like https://github.com/anonymoustux/homebrew-tap
+  - Ensure `TAP_GITHUB_TOKEN` has been added as **repository secret** on GitHub
+  - Uncomment **line 198** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 
 ## Used Libraries
 - [spf13/cobra](https://github.com/spf13/cobra)
