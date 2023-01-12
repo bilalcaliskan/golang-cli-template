@@ -27,6 +27,8 @@
   - Ensure your created repository from that template has been added to https://sonarcloud.io/
   - Ensure `SONAR_TOKEN` has been added as **repository secret** on GitHub
   - Ensure `SONAR_TOKEN` has been added as **dependabot secret** on GitHub
+  - Uncomment **line 149** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 94** to **line 123** in [.github/workflows/push.yml](.github/workflows/push.yml)
 - If you want to create banner:
   - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory
   - Uncomment **line 30** and **line 31** in [cmd/root.go](cmd/root.go)

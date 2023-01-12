@@ -146,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - codeql
-      - sonarcloud
+#      - sonarcloud
       - build
     steps:
       - name: Checkout
