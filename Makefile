@@ -132,14 +132,9 @@ PROJECT_NAME ?= $(shell read -p "'Kebab-cased' Project Name(ex: demo-project): "
 PROJECT_NAME_PASCAL_CASE ?= $(shell read -p "'Pascal-cased' Project Name(ex: DemoProject): " project_name_pascal_case; echo $$project_name_pascal_case)
 PROJECT_NAME_CAMEL_CASE ?= $(shell read -p "'Camel-cased' Project Name(ex: demoProject): " project_name_camel_case; echo $$project_name_camel_case)
 prepare-initial-project:
-	grep -rl bilalcaliskan . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/bilalcaliskan/$(GITHUB_USERNAME)/g'
-	grep -rl demo-project . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demo-project/$(PROJECT_NAME)/g'
-	grep -rl DemoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/DemoProject/$(PROJECT_NAME_PASCAL_CASE)/g'
-	grep -rl demoProject . --exclude=README.md --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demoProject/$(PROJECT_NAME_CAMEL_CASE)/g'
-	echo ""
-	echo ""
-	echo "Here are few manuel steps to check:"
-	echo "  - Please ensure created repository has been added to \"https://sonarcloud.io/\""
-	echo "  - Please ensure \"SONAR_TOKEN\" has been added as repository secret"
-	echo "  - Please ensure \"DOCKER_USERNAME\" and \"DOCKER_PASSWORD\" repository secrets have been added to your repository if you want to dockerize app"
-	echo "  - If you want to release as Formula, add \"TAP_GITHUB_TOKEN\" secret and uncomment brew related configurations on file \"build/package/.goreleaser.yaml\""
+	grep -rl bilalcaliskan . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/bilalcaliskan/$(GITHUB_USERNAME)/g'
+	grep -rl demo-project-2 . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demo-project-2/$(PROJECT_NAME)/g'
+	grep -rl DemoProject2 . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/DemoProject2/$(PROJECT_NAME_PASCAL_CASE)/g'
+	grep -rl demoProject2 . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/demoProject2/$(PROJECT_NAME_CAMEL_CASE)/g'
+	echo "Please refer to *Additional nice-to-have steps* in README.md for additional features"
+	echo "Cheers!"
