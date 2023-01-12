@@ -14,7 +14,7 @@
 ## Required Steps
 - Single command is mostly enough to prepare project, it will prompt you with some questions about your new project:
   ```shell
-  make prepare-initial-project
+  $ make prepare-initial-project
   ```
 
 ## Additional nice-to-have steps
