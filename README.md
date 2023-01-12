@@ -34,7 +34,7 @@
   - Uncomment **line 30** and **line 31** in [cmd/root.go](cmd/root.go)
   - Run `go get -u github.com/dimiro1/banner`
 - If you want to release as Homebrew Formula:
-  - At first, you must have a **formula repository** like https://github.com/anonymoustux/homebrew-tap
+  - At first, you must have a **formula repository** like https://github.com/bilalcaliskan/homebrew-tap
   - Ensure `TAP_GITHUB_TOKEN` has been added as **repository secret** on GitHub
   - Uncomment **line 198** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
