@@ -37,15 +37,16 @@ run-lint: lint-golangci-lint lint-revive
 
 .PHONY: lint-golangci-lint
 lint-golangci-lint:
-	$(info running golangci-lint...)
+	#$(info running golangci-lint...)
+	echo "running golangci-lint..."
 	$(LOCAL_BIN)/golangci-lint -v run ./... || (echo golangci-lint returned an error, exiting!; sh -c 'exit 1';)
-	$(info golangci-lint exited successfully!)
+	echo "golangci-lint exited successfully!"
 
 .PHONY: lint-revive
 lint-revive:
-	$(info running revive...)
+	echo "running revive..."
 	$(LOCAL_BIN)/revive -formatter=stylish -config=build/ci/.revive.toml -exclude ./vendor/... ./... || (echo revive returned an error, exiting!; sh -c 'exit 1';)
-	$(info revive exited successfully!)
+	echo "revive exited successfully!"
 
 .PHONY: upgrade-direct-deps
 upgrade-direct-deps: tidy
@@ -75,25 +76,25 @@ fmt: tools run-fmt run-ineffassign run-vet
 
 .PHONY: run-fmt
 run-fmt:
-	$(info running fmt...)
+	echo "running fmt..."
 	go fmt ./... || (echo fmt returned an error, exiting!; sh -c 'exit 1';)
-	$(info fmt exited successfully!)
+	echo "fmt exited successfully!"
 
 .PHONY: run-ineffassign
 run-ineffassign:
-	$(info running ineffassign...)
+	echo "running ineffassign..."
 	$(LOCAL_BIN)/ineffassign ./... || (echo ineffassign returned an error, exiting!; sh -c 'exit 1';)
-	$(info ineffassign exited successfully!)
+	echo "ineffassign exited successfully!"
 
 .PHONY: run-vet
 run-vet:
-	$(info running vet...)
+	echo "running vet..."
 	go vet ./... || (echo vet returned an error, exiting!; sh -c 'exit 1';)
-	$(info vet exited successfully!)
+	echo "vet exited successfully!"
 
 .PHONY: test
 test: tidy
-	$(info starting the test for whole module...)
+	echo "starting the test for whole module..."
 	go test -failfast -vet=off -race ./... || (echo an error while testing, exiting!; sh -c 'exit 1';)
 
 .PHONY: test-with-coverage
@@ -106,9 +107,9 @@ update: tidy
 
 .PHONY: build
 build: tidy
-	$(info building binary...)
+	echo "building binary..."
 	go build -o bin/main main.go || (echo an error while building binary, exiting!; sh -c 'exit 1';)
-	$(info binary built successfully!)
+	echo "binary built successfully!"
 
 .PHONY: run
 run: tidy
