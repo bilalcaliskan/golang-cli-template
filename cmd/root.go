@@ -26,9 +26,11 @@ var rootCmd = &cobra.Command{
 	Short:   "",
 	Long:    ``,
 	Version: ver.GitVersion,
-	Run: func(cmd *cobra.Command, args []string) {
-		/*bannerBytes, _ := ioutil.ReadFile("banner.txt")
-		banner.Init(os.Stdout, true, false, strings.NewReader(string(bannerBytes)))*/
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		/*if _, err := os.Stat("build/ci/banner.txt"); err == nil {
+			bannerBytes, _ := os.ReadFile("build/ci/banner.txt")
+			banner.Init(os.Stdout, true, false, strings.NewReader(string(bannerBytes)))
+		}*/
 
 		logging.GetLogger().Info("golang-cli-template is started",
 			zap.String("appVersion", ver.GitVersion),
