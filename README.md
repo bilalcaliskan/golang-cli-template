@@ -30,8 +30,8 @@
   - Uncomment **line 149** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 94** to **line 123** in [.github/workflows/push.yml](.github/workflows/push.yml)
 - If you want to create banner:
-  - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory
-  - Uncomment **line 30** and **line 31** in [cmd/root.go](cmd/root.go)
+  - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory into a file **banner.txt**
+  - Uncomment **line 18** and **line 35** to **line 38** in [cmd/root.go](cmd/root.go)
   - Run `go get -u github.com/dimiro1/banner`
 - If you want to release as Homebrew Formula:
   - At first, you must have a **formula repository** like https://github.com/bilalcaliskan/homebrew-tap
