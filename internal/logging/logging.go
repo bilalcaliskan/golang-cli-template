@@ -1,26 +1,26 @@
 package logging
 
 import (
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"os"
+
+	"github.com/rs/zerolog"
 )
 
-var logger *zap.Logger
+var (
+	logger zerolog.Logger
+	Level  = zerolog.InfoLevel
+)
 
 func init() {
-	logger = zap.New(zapcore.NewTee(zapcore.NewCore(zapcore.NewJSONEncoder(zapcore.EncoderConfig{
-		MessageKey:   "message",
-		LevelKey:     "severity",
-		EncodeLevel:  zapcore.LowercaseLevelEncoder,
-		TimeKey:      "time",
-		EncodeTime:   zapcore.RFC3339TimeEncoder,
-		CallerKey:    "caller",
-		EncodeCaller: zapcore.FullCallerEncoder,
-	}), zapcore.Lock(os.Stdout), zap.InfoLevel)))
+	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	logger = zerolog.New(consoleWriter).With().Timestamp().Logger().Level(Level)
 }
 
-// GetLogger returns the shared *zap.Logger
-func GetLogger() *zap.Logger {
+func GetLogger() zerolog.Logger {
 	return logger
+}
+
+func EnableDebugLogging() {
+	logger = logger.Level(zerolog.DebugLevel)
 }
