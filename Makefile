@@ -129,13 +129,9 @@ cross-compile:
 
 .PHONY: prepare-initial-project
 GITHUB_USERNAME ?= $(shell read -p "Your Github username(ex: bilalcaliskan): " github_username; echo $$github_username)
-PROJECT_NAME ?= $(shell read -p "'Kebab-cased' Project Name(ex: demo-project): " project_name; echo $$project_name)
-PROJECT_NAME_PASCAL_CASE ?= $(shell read -p "'Pascal-cased' Project Name(ex: DemoProject): " project_name_pascal_case; echo $$project_name_pascal_case)
-PROJECT_NAME_CAMEL_CASE ?= $(shell read -p "'Camel-cased' Project Name(ex: demoProject): " project_name_camel_case; echo $$project_name_camel_case)
+PROJECT_NAME ?= $(shell read -p "'Kebab-cased' Project Name(ex: golang-cli-template): " project_name; echo $$project_name)
 prepare-initial-project:
 	grep -rl bilalcaliskan . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/bilalcaliskan/$(GITHUB_USERNAME)/g'
-	grep -rl golang-cli-template . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golang-cli-template/$(PROJECT_NAME)/g'
-	grep -rl GolangCliTemplate . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/GolangCliTemplate/$(PROJECT_NAME_PASCAL_CASE)/g'
-	grep -rl golangCliTemplate . --exclude={README.md,Makefile} --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golangCliTemplate/$(PROJECT_NAME_CAMEL_CASE)/g'
+	grep -rl golang-cli-template . --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golang-cli-template/$(PROJECT_NAME)/g'
 	echo "Please refer to *Additional nice-to-have steps* in README.md for additional features"
 	echo "Cheers!"

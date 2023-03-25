@@ -14,7 +14,7 @@ type FooOptions struct {
 	Bar string
 }
 
-// GetFooOptions returns the pointer of GolangCliTemplateOptions
+// GetFooOptions returns the pointer of FooOptions
 func GetFooOptions() *FooOptions {
 	return fooOptions
 }

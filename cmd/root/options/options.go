@@ -15,7 +15,7 @@ type RootOptions struct {
 	Key string
 }
 
-// GetRootOptions returns the pointer of GolangCliTemplateOptions
+// GetRootOptions returns the pointer of RootOptions
 func GetRootOptions() *RootOptions {
 	return rootOptions
 }
