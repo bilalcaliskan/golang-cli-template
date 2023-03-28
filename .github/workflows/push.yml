@@ -53,10 +53,6 @@ jobs:
 
   gosec:
     runs-on: ubuntu-latest
-    needs:
-      - lint
-      - fmt
-      - test
     steps:
       - name: Checkout Source
         uses: actions/checkout@v3
@@ -71,10 +67,6 @@ jobs:
 
   codeql:
     runs-on: ubuntu-latest
-    needs:
-      - lint
-      - fmt
-      - test
     strategy:
       fail-fast: false
       matrix:
@@ -93,10 +85,6 @@ jobs:
 
 #  sonarcloud:
 #    runs-on: ubuntu-latest
-#    needs:
-#      - lint
-#      - fmt
-#      - test
 #    steps:
 #      - uses: actions/checkout@v3
 #        with:
@@ -123,10 +111,6 @@ jobs:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build:
-    needs:
-      - lint
-      - fmt
-      - test
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -145,6 +129,10 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     needs:
+      - lint
+      - fmt
+      - test
+      - gosec
       - codeql
 #      - sonarcloud
       - build

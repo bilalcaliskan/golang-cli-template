@@ -21,14 +21,14 @@
 - If you want to build and publish Docker image:
   - Ensure `DOCKER_USERNAME` has been added as **repository secret on GitHub**
   - Ensure `DOCKER_PASSWORD` has been added as **repository secret on GitHub**
-  - Uncomment **line 178** to **line 185** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 166** to **line 173** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 32** to **line 50** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 - If you want to enable https://sonarcloud.io/ integration:
   - Ensure your created repository from that template has been added to https://sonarcloud.io/
   - Ensure `SONAR_TOKEN` has been added as **repository secret** on GitHub
   - Ensure `SONAR_TOKEN` has been added as **dependabot secret** on GitHub
-  - Uncomment **line 149** in [.github/workflows/push.yml](.github/workflows/push.yml)
-  - Uncomment **line 94** to **line 123** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 137** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 86** to **line 111** in [.github/workflows/push.yml](.github/workflows/push.yml)
 - If you want to create banner:
   - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory into a file **banner.txt**
   - Uncomment **line 18** and **line 35** to **line 38** in [cmd/root.go](cmd/root.go)
@@ -36,7 +36,7 @@
 - If you want to release as Homebrew Formula:
   - At first, you must have a **formula repository** like https://github.com/bilalcaliskan/homebrew-tap
   - Ensure `TAP_GITHUB_TOKEN` has been added as **repository secret** on GitHub
-  - Uncomment **line 198** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 186** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 
 ## Used Libraries
