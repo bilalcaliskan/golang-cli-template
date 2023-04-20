@@ -3,8 +3,8 @@ module github.com/bilalcaliskan/golang-cli-template
 go 1.20
 
 require (
-	github.com/rs/zerolog v1.29.0
-	github.com/spf13/cobra v1.6.1
+	github.com/rs/zerolog v1.29.1
+	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.2
 )
 
