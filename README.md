@@ -36,7 +36,7 @@
   - Run `go get -u github.com/dimiro1/banner`
 - If you want to release as Homebrew Formula:
   - At first, you must have a **formula repository** like https://github.com/bilalcaliskan/homebrew-tap
-  - Ensure `TAP_GITHUB_TOKEN` has been added as **repository secret** on GitHub
+  - Create an access token on account that has **formula repository** mentioned above item and ensure that token is added as`TAP_GITHUB_TOKEN` **repository secret** on GitHub
   - Uncomment **line 171** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 
