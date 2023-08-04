@@ -21,15 +21,15 @@
 - If you want to build and publish Docker image:
   - Ensure `DOCKER_USERNAME` has been added as **repository secret on GitHub**
   - Ensure `DOCKER_PASSWORD` has been added as **repository secret on GitHub**
-  - Uncomment **line 151** to **line 158** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 161** to **line 168** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 32** to **line 50** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 - If you want to enable https://sonarcloud.io/ integration:
   - Ensure your created repository from that template has been added to https://sonarcloud.io/
   - Ensure `SONAR_TOKEN` has been added as **repository secret** on GitHub
   - Ensure `SONAR_TOKEN` has been added as **dependabot secret** on GitHub
-  - Uncomment **line 75** to **line 100** in [.github/workflows/pr.yml](.github/workflows/pr.yml)
-  - Uncomment **line 122** in [.github/workflows/push.yml](.github/workflows/push.yml)
-  - Uncomment **line 72** to **line 97** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 84** to **line 109** in [.github/workflows/pr.yml](.github/workflows/pr.yml)
+  - Uncomment **line 132** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 81** to **line 106** in [.github/workflows/push.yml](.github/workflows/push.yml)
 - If you want to create banner:
   - Generate a banner from [here](https://devops.datenkollektiv.de/banner.txt/index.html) and place it inside of [build/ci](build/ci) directory into a file **banner.txt**
   - Uncomment **line 18** and **line 35** to **line 38** in [cmd/root.go](cmd/root.go)
@@ -37,7 +37,7 @@
 - If you want to release as Homebrew Formula:
   - At first, you must have a **formula repository** like https://github.com/bilalcaliskan/homebrew-tap
   - Create an access token on account that has **formula repository** mentioned above item and ensure that token is added as`TAP_GITHUB_TOKEN` **repository secret** on GitHub
-  - Uncomment **line 171** in [.github/workflows/push.yml](.github/workflows/push.yml)
+  - Uncomment **line 181** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 
 ## Used Libraries
