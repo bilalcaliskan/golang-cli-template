@@ -23,11 +23,11 @@ builds:
     main: ./main.go
 
 archives:
-  - replacements:
-      amd64: x86_64
-    files:
+  - files:
       - README.md
       - LICENSE
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
 
 #dockers:
 #  - image_templates:
