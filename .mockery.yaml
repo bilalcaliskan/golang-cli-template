@@ -1,0 +1,10 @@
+with-expecter: true
+dir: "{{.InterfaceDir}}"
+filename: "mock_{{.InterfaceName | lower}}.go"
+inpackage: true
+#packages:
+#  github.com/bilalcaliskan/rss-feed-filterer/internal/feed:
+#    config:
+#    interfaces:
+#      Parser:
+#        config:

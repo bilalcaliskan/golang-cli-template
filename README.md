@@ -41,9 +41,10 @@
   - Uncomment **line 165** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
 
-## Used Libraries
+## Used Libraries and Tools
 - [spf13/cobra](https://github.com/spf13/cobra)
 - [rs/zerolog](https://github.com/rs/zerolog)
+- [vektra/mockery](https://github.com/vektra/mockery)
 
 ## Development
 This project requires below tools while developing:
