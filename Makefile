@@ -1,13 +1,15 @@
-GOLANGCI_LINT_VERSION = latest
-REVIVE_VERSION = latest
-GOIMPORTS_VERSION = latest
-INEFFASSIGN_VERSION = latest
-
-
 LOCAL_BIN := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/.bin
 
+DEFAULT_GO_TEST_CMD ?= go test ./... -race -p 1 -covermode=atomic
+DEFAULT_GO_RUN_ARGS ?= ""
+
+GOLANGCI_LINT_VERSION := latest
+REVIVE_VERSION := v1.3.4
+MOCKERY_VERSION := v2.39.1
+
+
 .PHONY: all
-all: clean tools lint fmt test build
+all: clean tools lint test build
 
 .PHONY: clean
 clean:
@@ -21,8 +23,11 @@ pre-commit-setup:
 	pre-commit install -c build/ci/.pre-commit-config.yaml
 
 .PHONY: tools
-tools:  golangci-lint-install revive-install go-imports-install ineffassign-install
-	go mod tidy
+tools:  mockery-install golangci-lint-install revive-install vendor
+
+.PHONY: mockery-install
+mockery-install:
+	GOBIN=$(LOCAL_BIN) go install github.com/vektra/mockery/v2@$(MOCKERY_VERSION)
 
 .PHONY: golangci-lint-install
 golangci-lint-install:
@@ -32,10 +37,6 @@ golangci-lint-install:
 revive-install:
 	GOBIN=$(LOCAL_BIN) go install github.com/mgechev/revive@$(REVIVE_VERSION)
 
-.PHONY: ineffassign-install
-ineffassign-install:
-	GOBIN=$(LOCAL_BIN) go install github.com/gordonklaus/ineffassign@$(INEFFASSIGN_VERSION)
-
 .PHONY: lint
 lint: tools run-lint
 
@@ -44,19 +45,16 @@ run-lint: lint-golangci-lint lint-revive
 
 .PHONY: lint-golangci-lint
 lint-golangci-lint:
-	#$(info running golangci-lint...)
-	echo "running golangci-lint..."
+	$(info running golangci-lint...)
 	$(LOCAL_BIN)/golangci-lint -v run ./... || (echo golangci-lint returned an error, exiting!; sh -c 'exit 1';)
-	echo "golangci-lint exited successfully!"
 
 .PHONY: lint-revive
 lint-revive:
-	echo "running revive..."
+	$(info running revive...)
 	$(LOCAL_BIN)/revive -formatter=stylish -config=build/ci/.revive.toml -exclude ./vendor/... ./... || (echo revive returned an error, exiting!; sh -c 'exit 1';)
-	echo "revive exited successfully!"
 
-.PHONY: upgrade-direct-deps
-upgrade-direct-deps: tidy
+.PHONY: upgrade-deps
+upgrade-deps: vendor
 	for item in `grep -v 'indirect' go.mod | grep '/' | cut -d ' ' -f 1`; do \
 		echo "trying to upgrade direct dependency $$item" ; \
 		go get -u $$item ; \
@@ -68,71 +66,43 @@ upgrade-direct-deps: tidy
 tidy:
 	go mod tidy
 
-.PHONY: run-goimports
-run-goimports: go-imports-install
-	for item in `find . -type f -name '*.go' -not -path './vendor/*'`; do \
-		$(LOCAL_BIN)/goimports -l -w $$item ; \
-	done
-
-.PHONY: go-imports-install
-go-imports-install:
-	GOBIN=$(LOCAL_BIN) go install golang.org/x/tools/cmd/goimports@$(GOIMPORTS_VERSION)
-
-.PHONY: fmt
-fmt: tools run-fmt run-ineffassign run-vet
-
-.PHONY: run-fmt
-run-fmt:
-	echo "running fmt..."
-	go fmt ./... || (echo fmt returned an error, exiting!; sh -c 'exit 1';)
-	echo "fmt exited successfully!"
-
-.PHONY: run-ineffassign
-run-ineffassign:
-	echo "running ineffassign..."
-	$(LOCAL_BIN)/ineffassign ./... || (echo ineffassign returned an error, exiting!; sh -c 'exit 1';)
-	echo "ineffassign exited successfully!"
-
-.PHONY: run-vet
-run-vet:
-	echo "running vet..."
-	go vet ./... || (echo vet returned an error, exiting!; sh -c 'exit 1';)
-	echo "vet exited successfully!"
+.PHONY: vendor
+vendor: tidy
+	go mod vendor
 
 .PHONY: test
-test: tidy
-	echo "starting the test for whole module..."
-	go test -failfast -vet=off -race ./... || (echo an error while testing, exiting!; sh -c 'exit 1';)
+test: vendor
+	$(info starting the test for whole module...)
+	$(DEFAULT_GO_TEST_CMD) -coverprofile=coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 
-.PHONY: test-with-coverage
-test-with-coverage: tidy
-	go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+#.PHONY: test-unit
+#test-unit: vendor
+#	$(info starting the unit test for whole module...)
+#	$(DEFAULT_GO_TEST_CMD) -tags "unit" -coverprofile=unit_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
+#
+#.PHONY: test-e2e
+#test-e2e: vendor
+#	$(info starting the e2e test for whole module...)
+#	$(DEFAULT_GO_TEST_CMD) -tags "e2e" -coverprofile=e2e_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
+#
+#.PHONY: test-integration
+#test-integration: vendor
+#	$(info starting the integration test for whole module...)
+#	$(DEFAULT_GO_TEST_CMD) -tags "integration" -coverprofile=integration_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 
-.PHONY: update
-update: tidy
-	go get -u ./...
+.PHONY: test-coverage
+test-coverage: test
+	go tool cover -html=coverage.txt -o cover.html
+	open cover.html
 
 .PHONY: build
-build: tidy
-	echo "building binary..."
+build: vendor
+	$(info building binary...)
 	go build -o bin/main main.go || (echo an error while building binary, exiting!; sh -c 'exit 1';)
-	echo "binary built successfully!"
 
 .PHONY: run
-run: tidy
-	go run main.go
-
-.PHONY: cross-compile
-cross-compile:
-	GOOS=freebsd GOARCH=386 go build -o bin/main-freebsd-386 main.go
-	GOOS=darwin GOARCH=386 go build -o bin/main-darwin-386 main.go
-	GOOS=linux GOARCH=386 go build -o bin/main-linux-386 main.go
-	GOOS=windows GOARCH=386 go build -o bin/main-windows-386 main.go
-	GOOS=freebsd GOARCH=amd64 go build -o bin/main-freebsd-amd64 main.go
-	GOOS=darwin GOARCH=amd64 go build -o bin/main-darwin-amd64 main.go
-	GOOS=linux GOARCH=amd64 go build -o bin/main-linux-amd64 main.go
-	GOOS=windows GOARCH=amd64 go build -o bin/main-windows-amd64 main.go
-
+run: vendor
+	go run main.go $(DEFAULT_GO_RUN_ARGS)
 
 .PHONY: prepare-initial-project
 GITHUB_USERNAME ?= $(shell read -p "Your Github username(ex: bilalcaliskan): " github_username; echo $$github_username)
@@ -142,3 +112,7 @@ prepare-initial-project:
 	grep -rl golang-cli-template . --exclude-dir=.git --exclude-dir=.idea | xargs sed -i 's/golang-cli-template/$(PROJECT_NAME)/g'
 	echo "Please refer to *Additional nice-to-have steps* in README.md for additional features"
 	echo "Cheers!"
+
+.PHONY: generate-mocks
+generate-mocks: mockery-install tidy vendor
+	$(LOCAL_BIN)/mockery || (echo mockery returned an error, exiting!; sh -c 'exit 1';)
