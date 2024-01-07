@@ -71,22 +71,22 @@ vendor: tidy
 	go mod vendor
 
 .PHONY: test
-test: generate-mocks vendor
+test: vendor
 	$(info starting the test for whole module...)
 	$(DEFAULT_GO_TEST_CMD) -coverprofile=coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 
 #.PHONY: test-unit
-#test-unit: generate-mocks vendor
+#test-unit: vendor
 #	$(info starting the unit test for whole module...)
 #	$(DEFAULT_GO_TEST_CMD) -tags "unit" -coverprofile=unit_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 #
 #.PHONY: test-e2e
-#test-e2e: generate-mocks vendor
+#test-e2e: vendor
 #	$(info starting the e2e test for whole module...)
 #	$(DEFAULT_GO_TEST_CMD) -tags "e2e" -coverprofile=e2e_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 #
 #.PHONY: test-integration
-#test-integration: generate-mocks vendor
+#test-integration: vendor
 #	$(info starting the integration test for whole module...)
 #	$(DEFAULT_GO_TEST_CMD) -tags "integration" -coverprofile=integration_coverage.txt || (echo an error while testing, exiting!; sh -c 'exit 1';)
 

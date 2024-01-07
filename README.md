@@ -40,11 +40,12 @@
   - Create an access token on account that has **formula repository** mentioned above item and ensure that token is added as`TAP_GITHUB_TOKEN` **repository secret** on GitHub
   - Uncomment **line 165** in [.github/workflows/push.yml](.github/workflows/push.yml)
   - Uncomment **line 70** to **line 80** in [build/package/.goreleaser.yaml](build/package/.goreleaser.yaml)
+- If you want to mock your interfaces with [mockery](https://github.com/vektra/mockery):
+  - Add `generate-mocks` target as a prerequisite to all uncommented targets starting with `test` in [Makefile](Makefile)
 
-## Used Libraries and Tools
+## Used Libraries
 - [spf13/cobra](https://github.com/spf13/cobra)
 - [rs/zerolog](https://github.com/rs/zerolog)
-- [vektra/mockery](https://github.com/vektra/mockery)
 
 ## Development
 This project requires below tools while developing:
